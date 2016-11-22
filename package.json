@@ -1,10 +1,10 @@
 {
-  "name": "vue-clipboard",
+  "name": "vue-clipboards",
   "version": "0.1.0",
   "description": "Vue2.0 clipboard component.",
-  "main": "dist/vue-clipboard.js",
+  "main": "dist/vue-clipboards.js",
   "repository": {
-    "url": "git@github.com:zhuowenli/vue-clipboard.git",
+    "url": "git@github.com:zhuowenli/vue-clipboards.git",
     "type": "git"
   },
   "author": "卓文理 <531840344@qq.com>",

@@ -7,7 +7,7 @@
 import Clipboard from 'clipboard';
 
 if (!Clipboard) {
-    throw new Error('[vue-clipboard] cannot locate Clipboard.')
+    throw new Error('[vue-clipboards] cannot locate Clipboard.')
 }
 
 export default function (Vue) {

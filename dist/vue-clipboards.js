@@ -1,6 +1,6 @@
 /*!
- * vue-clipboard v1.0.0
- * (c) 2016 zhuowenli
+ * vue-clipboards v0.1.0
+ * (c) 2016 卓文理 <531840344@qq.com>
  * Released under the MIT License.
  */
 (function (global, factory) {
@@ -953,7 +953,7 @@ var Clipboard = unwrapExports(clipboard);
  */
 
 if (!Clipboard) {
-    throw new Error('[vue-clipboard] cannot locate Clipboard.');
+    throw new Error('[vue-clipboards] cannot locate Clipboard.');
 }
 
 var VueClipboard = function (Vue) {
@@ -996,7 +996,7 @@ function plugin(Vue) {
     var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     if (plugin.installed) {
-        console.warn('[vue-clipboard] already installed.');
+        console.warn('[vue-clipboards] already installed.');
     }
 
     VueClipboard(Vue);

@@ -4,11 +4,11 @@
  * @desc  : index
  */
 
-import VueClipboard from './vue-clipboard';
+import VueClipboard from './vue-clipboards';
 
 function plugin (Vue, option = {}) {
     if (plugin.installed) {
-        console.warn('[vue-clipboard] already installed.');
+        console.warn('[vue-clipboards] already installed.');
     }
 
     VueClipboard(Vue);

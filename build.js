@@ -12,12 +12,12 @@ const uglify = require('uglify-js');
 const babel = require('rollup-plugin-babel');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
-const { version } = require('./package.json');
+const { name, version, author, license } = require('./package.json');
 
 const banner =`/*!
- * vue-clipboard v${version}
- * (c) ${new Date().getFullYear()} zhuowenli
- * Released under the MIT License.
+ * ${name} v${version}
+ * (c) ${new Date().getFullYear()} ${author}
+ * Released under the ${license} License.
  */`;
 
 rollup.rollup({
@@ -35,7 +35,7 @@ rollup.rollup({
             moduleName: 'vueClipboard'
         });
 
-        return write('dist/vue-clipboard.js', code).then(() => code);
+        return write('dist/vue-clipboards.js', code).then(() => code);
     })
     .then((code) => {
         const minified = banner + '\n' + uglify.minify(code, {
@@ -45,7 +45,7 @@ rollup.rollup({
             }
         }).code;
 
-        return write('dist/vue-clipboard.min.js', minified)
+        return write('dist/vue-clipboards.min.js', minified)
     })
     .catch(logError);
 

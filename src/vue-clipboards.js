@@ -4,14 +4,14 @@
  * @desc  : VueClipboard
  */
 
-import Clipboard from 'clipboard';
+const Clipboard = require('Clipboard');
 
 if (!Clipboard) {
     throw new Error('[vue-clipboards] cannot locate Clipboard.')
 }
 
 export default function (Vue) {
-    let clipboard;
+    let clipboards;
 
     Vue.directive('clipboard', {
         bind(container, binding) {
@@ -22,16 +22,16 @@ export default function (Vue) {
                 option.text = () => value;
             }
 
-            clipboard = new Clipboard(container, option);
+            clipboards = new Clipboard(container, option);
 
-            clipboard.on('success', console.log);
-            clipboard.on('error', console.log);
+            clipboards.on('success', console.log);
+            clipboards.on('error', console.log);
         },
         // update(container, binding) {
         //     console.log(container, binding);
         // },
         unbind() {
-            clipboard.destroy();
+            clipboards.destroy();
         }
     });
 }

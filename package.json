@@ -1,7 +1,7 @@
 {
   "name": "vue-clipboards",
   "version": "0.1.0",
-  "description": "Vue2.0 clipboard component.",
+  "description": "Vue2.0 directive to copy or cut text to clipboard.",
   "main": "dist/vue-clipboards.js",
   "repository": {
     "url": "git@github.com:zhuowenli/vue-clipboards.git",
@@ -9,6 +9,9 @@
   },
   "author": "卓文理 <531840344@qq.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "node build.js"
+  },
   "devDependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.8",

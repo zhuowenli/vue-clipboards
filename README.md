@@ -26,5 +26,5 @@ new Vue({
 ```
 
 ```html
-    <button v-clipboard="copyData">Copy</button>
+<button v-clipboard="copyData">Copy</button>
 ```

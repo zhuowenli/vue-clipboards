@@ -11,7 +11,8 @@
   "license": "MIT",
   "scripts": {
     "build": "node build.js",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "npm run lint"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",

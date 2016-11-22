@@ -7,15 +7,16 @@
 const Clipboard = require('Clipboard');
 
 if (!Clipboard) {
-    throw new Error('[vue-clipboards] cannot locate Clipboard.')
+    throw new Error('[vue-clipboards] cannot locate Clipboard.');
 }
 
 export default function (Vue) {
     let clipboards;
 
     Vue.directive('clipboard', {
-        bind(container, binding) {
+        bind (container, binding, vnode) {
             const { value } = binding;
+            const { listeners } = vnode.componentOptions;
             const option = {};
 
             if (value && typeof value === 'string') {
@@ -24,13 +25,14 @@ export default function (Vue) {
 
             clipboards = new Clipboard(container, option);
 
-            clipboards.on('success', console.log);
-            clipboards.on('error', console.log);
+            if (listeners) {
+                Object.keys(listeners).map(callback => clipboards.on(callback, listeners[callback].fn));
+            }
         },
-        // update(container, binding) {
+        // update (container, binding) {
         //     console.log(container, binding);
         // },
-        unbind() {
+        unbind () {
             clipboards.destroy();
         }
     });

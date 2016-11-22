@@ -28,3 +28,32 @@ new Vue({
 ```html
 <button v-clipboard="copyData">Copy</button>
 ```
+
+## Event
+
+```html
+<button v-clipboard="copyData" @success="handleSuccess" @error="handleError">Copy</button>
+```
+
+```js
+const VueClipboards = require('vue-clipboards');
+
+Vue.use(VueClipboards);
+
+new Vue({
+    data() {
+        return {
+            copyData: 'copy data'
+        }
+    },
+    methods: {
+        handleSuccess(e) {
+            console.log(e);
+        },
+        handleError(e) {
+            console.log(e);
+        },
+    }
+});
+```
+

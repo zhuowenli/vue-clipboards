@@ -1,0 +1,15 @@
+---
+parser: babel-eslint
+extends:
+  - standard
+
+env:
+  node: true
+  amd: true
+  es6: true
+
+rules:
+  indent: ["error", 4]
+  linebreak-style: [2, "unix"]
+  semi: [2, "always"]
+  strict: ["error"]

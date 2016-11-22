@@ -1,5 +1,5 @@
 /*!
- * vue-clipboards v0.1.0
+ * vue-clipboards v0.1.1
  * (c) 2016 卓文理 <531840344@qq.com>
  * Released under the MIT License.
  */
@@ -25,8 +25,9 @@ var VueClipboard = function (Vue) {
     var clipboards = void 0;
 
     Vue.directive('clipboard', {
-        bind: function bind(container, binding) {
+        bind: function bind(container, binding, vnode) {
             var value = binding.value;
+            var listeners = vnode.componentOptions.listeners;
 
             var option = {};
 
@@ -38,8 +39,11 @@ var VueClipboard = function (Vue) {
 
             clipboards = new Clipboard(container, option);
 
-            clipboards.on('success', console.log);
-            clipboards.on('error', console.log);
+            if (listeners) {
+                Object.keys(listeners).map(function (callback) {
+                    return clipboards.on(callback, listeners[callback].fn);
+                });
+            }
         },
 
         // update(container, binding) {

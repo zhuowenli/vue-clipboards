@@ -15,7 +15,7 @@ function plugin (Vue, option = {}) {
 }
 
 if (typeof define === 'function' && define.amd) {
-    define([], () => { plugin });
+    define([], () => ({ plugin }));
 } else if (window.Vue) {
     window.Vue.use(plugin);
 }

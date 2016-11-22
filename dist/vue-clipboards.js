@@ -1,5 +1,5 @@
 /*!
- * vue-clipboards v0.1.1
+ * vue-clipboards v0.2.0
  * (c) 2016 卓文理 <531840344@qq.com>
  * Released under the MIT License.
  */
@@ -46,7 +46,7 @@ var VueClipboard = function (Vue) {
             }
         },
 
-        // update(container, binding) {
+        // update (container, binding) {
         //     console.log(container, binding);
         // },
         unbind: function unbind() {
@@ -73,7 +73,7 @@ function plugin(Vue) {
 
 if (typeof define === 'function' && define.amd) {
     define([], function () {
-        plugin;
+        return { plugin: plugin };
     });
 } else if (window.Vue) {
     window.Vue.use(plugin);

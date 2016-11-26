@@ -4,7 +4,7 @@
  * @desc  : VueClipboard
  */
 
-const Clipboard = require('Clipboard');
+const Clipboard = require('clipboard');
 
 if (!Clipboard) {
     throw new Error('[vue-clipboards] cannot locate Clipboard.');

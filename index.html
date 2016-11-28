@@ -9,7 +9,10 @@
     <title>vue clipboard</title>
 </head>
 <body>
-    <div class="example"></div>
+    <div id="app">
+        <button v-clipboard="value" @success="handleSuccess" @error="handleError">Copy</button>
+    </div>
+    <div id="logs"></div>
 
     <script src="example/example.build.js"></script>
 </body>

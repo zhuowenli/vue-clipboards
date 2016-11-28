@@ -1,6 +1,6 @@
 {
   "name": "vue-clipboards",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Vue2.0 directive to copy or cut text to clipboard.",
   "main": "dist/vue-clipboards.js",
   "repository": {
@@ -10,6 +10,7 @@
   "author": "卓文理 <531840344@qq.com>",
   "license": "MIT",
   "scripts": {
+    "dev": "webpack --watch example/example.js example/example.build.js",
     "build": "node build.js",
     "lint": "eslint src",
     "test": "npm run lint"

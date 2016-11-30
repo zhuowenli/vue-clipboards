@@ -24,10 +24,12 @@ export default function (Vue) {
 
             clipboards = new Clipboard(container, option);
 
-            if (vnode.data) {
-                const { on } = vnode.data;
+            const { listeners } = vnode.componentOptions;
+            const { on } = vnode.data;
+            const events = listeners ? listeners : on ? on : null;
 
-                Object.keys(on).map(callback => clipboards.on(callback, on[callback].fn));
+            if (events && typeof events === 'object' && Object.keys(events).length) {
+                Object.keys(events).map(cb => clipboards.on(cb, events[cb].fn));
             }
         },
         unbind () {

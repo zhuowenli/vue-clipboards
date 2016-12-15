@@ -24,8 +24,9 @@ export default function (Vue) {
 
             clipboards = new Clipboard(container, option);
 
-            const { listeners } = vnode.componentOptions;
-            const { on } = vnode.data;
+            const { componentOptions, data } = vnode;
+            const listeners = componentOptions ? componentOptions.listeners : null;
+            const on = data ? data.on : null;
             const events = listeners ? listeners : on ? on : null;
 
             if (events && typeof events === 'object' && Object.keys(events).length) {
@@ -33,7 +34,9 @@ export default function (Vue) {
             }
         },
         unbind () {
-            clipboards.destroy();
+            if (clipboards && clipboards.destroy) {
+                clipboards.destroy();
+            }
         }
     });
 }

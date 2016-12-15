@@ -1,5 +1,5 @@
 /*!
- * vue-clipboards v0.2.2
+ * vue-clipboards v0.2.3
  * (c) 2016 卓文理 <531840344@qq.com>
  * Released under the MIT License.
  */
@@ -238,9 +238,13 @@ var VueClipboard = function (Vue) {
 
             clipboards = new Clipboard(container, option);
 
-            var listeners = vnode.componentOptions.listeners;
-            var on = vnode.data.on;
+            console.log(typeof clipboards === 'undefined' ? 'undefined' : _typeof(clipboards));
 
+            var componentOptions = vnode.componentOptions,
+                data = vnode.data;
+
+            var listeners = componentOptions ? componentOptions.listeners : null;
+            var on = data ? data.on : null;
             var events = listeners ? listeners : on ? on : null;
 
             if (events && (typeof events === 'undefined' ? 'undefined' : _typeof(events)) === 'object' && Object.keys(events).length) {

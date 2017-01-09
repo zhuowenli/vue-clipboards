@@ -11,7 +11,6 @@ const rollup = require('rollup');
 const uglify = require('uglify-js');
 const babel = require('rollup-plugin-babel');
 const nodeResolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
 const { name, version, author, license } = require('./package.json');
 
 const banner =`/*!
@@ -24,7 +23,6 @@ rollup.rollup({
         entry: 'src/index.js',
         plugins: [
             nodeResolve(),
-            commonjs(),
             babel()
         ]
     })

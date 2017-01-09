@@ -37,6 +37,10 @@ export default function (Vue) {
             if (clipboards && clipboards.destroy) {
                 clipboards.destroy();
             }
+        },
+        update(container, binding, vnode) {
+            binding.def.unbind();
+            binding.def.bind(container, binding, vnode);
         }
     });
 }

@@ -6,6 +6,8 @@
 
 Vue wrapper for [clipboard](https://github.com/zenorocha/clipboard.js).
 
+DEMO: [https://zhuowenli.github.io/vue-clipboards/](https://zhuowenli.github.io/vue-clipboards/)
+
 ## Install
 
 ```

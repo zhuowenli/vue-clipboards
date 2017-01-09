@@ -1,4 +1,7 @@
 # vue-clipboard
+
+[![Build Status](https://travis-ci.org/zhuowenli/vue-clipboards.svg?branch=master)](https://travis-ci.org/zhuowenli/vue-clipboards)
+
 📋 Vue2.0 directive to copy or cut text to clipboard.
 
 Vue wrapper for [clipboard](https://github.com/zenorocha/clipboard.js).

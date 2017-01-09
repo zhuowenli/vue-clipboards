@@ -4,8 +4,8 @@
  * @desc  : Description
  */
 
-const Vue = require('Vue/dist/vue');
-const VueClipboards = require('../dist/vue-clipboards');
+import Vue from 'vue/dist/vue';
+import VueClipboards from '../dist/vue-clipboards';
 
 const log = console.log;
 const $logs = document.getElementById('logs');
@@ -14,14 +14,7 @@ const $logs = document.getElementById('logs');
 console.log = (...args) => {
     log.apply(console, args);
 
-    const _args = args.map(arg => {
-        if (typeof arg === 'object' && !arg.childred && !arg.elm) {
-            return JSON.stringify ? JSON.stringify(arg) : arg;
-        }
-        return arg;
-    });
-
-    $logs.innerHTML += `<p>${_args.join(' ')}</p>`;
+    $logs.innerHTML += `<p>${JSON.stringify(args)}</p>`;
 };
 
 Vue.use(VueClipboards);

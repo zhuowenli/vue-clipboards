@@ -27,7 +27,7 @@ export default function (Vue) {
             const { componentOptions, data } = vnode;
             const listeners = componentOptions ? componentOptions.listeners : null;
             const on = data ? data.on : null;
-            const events = listeners ? listeners : on ? on : null;
+            const events = listeners && listeners || on && on;
 
             if (events && typeof events === 'object' && Object.keys(events).length) {
                 Object.keys(events).map(cb => clipboards.on(cb, events[cb].fn));
@@ -38,7 +38,7 @@ export default function (Vue) {
                 clipboards.destroy();
             }
         },
-        update(container, binding, vnode) {
+        update (container, binding, vnode) {
             binding.def.unbind();
             binding.def.bind(container, binding, vnode);
         }

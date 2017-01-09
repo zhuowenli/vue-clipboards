@@ -162,7 +162,7 @@
 
               var listeners = componentOptions ? componentOptions.listeners : null;
               var on = data ? data.on : null;
-              var events = listeners ? listeners : on ? on : null;
+              var events = listeners && listeners || on && on;
 
               if (events && (typeof events === 'undefined' ? 'undefined' : _typeof(events)) === 'object' && Object.keys(events).length) {
                   Object.keys(events).map(function (cb) {

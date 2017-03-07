@@ -1,5 +1,5 @@
 /*!
- * vue-clipboards v0.2.4
+ * vue-clipboards v0.2.5
  * (c) 2017 卓文理 <531840344@qq.com>
  * Released under the MIT License.
  */
@@ -165,8 +165,9 @@
               var events = listeners && listeners || on && on;
 
               if (events && (typeof events === 'undefined' ? 'undefined' : _typeof(events)) === 'object' && Object.keys(events).length) {
+                  // fixed with Vue 2.2.x, event object `fn` rename to `fns`
                   Object.keys(events).map(function (cb) {
-                      return clipboards.on(cb, events[cb].fn);
+                      return clipboards.on(cb, events[cb].fn || events[cb].fns);
                   });
               }
           },

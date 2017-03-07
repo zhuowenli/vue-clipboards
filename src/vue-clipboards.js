@@ -30,7 +30,8 @@ export default function (Vue) {
             const events = listeners && listeners || on && on;
 
             if (events && typeof events === 'object' && Object.keys(events).length) {
-                Object.keys(events).map(cb => clipboards.on(cb, events[cb].fn));
+                // fixed with Vue 2.2.x, event object `fn` rename to `fns`
+                Object.keys(events).map(cb => clipboards.on(cb, events[cb].fn || events[cb].fns));
             }
         },
         unbind () {

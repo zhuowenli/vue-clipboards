@@ -19,17 +19,17 @@ console.log = (...args) => {
 
 Vue.use(VueClipboards);
 
-new Vue({
+export default new Vue({
     el: '#app',
     data: {
         value: 'Some message.'
     },
     methods: {
-        handleSuccess(e) {
+        handleSuccess (e) {
             console.log('handleSuccess:', e);
         },
-        handleError(e) {
+        handleError (e) {
             console.log('handleError:', e);
-        },
+        }
     }
 });

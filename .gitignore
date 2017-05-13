@@ -39,5 +39,6 @@ jspm_packages
 # yarn
 *.lock
 
+.npmrc
 .DS_Store
 dist-example/

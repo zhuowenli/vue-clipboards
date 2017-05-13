@@ -1,7 +1,8 @@
 ---
 parser: babel-eslint
 extends:
-  - standard
+  - airbnb-base
+  - vue
 
 env:
   es6: true
@@ -11,3 +12,4 @@ rules:
   linebreak-style: [2, "unix"]
   semi: [2, "always"]
   strict: ["error"]
+  import/no-extraneous-dependencies: 0

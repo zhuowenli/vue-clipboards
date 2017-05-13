@@ -40,3 +40,4 @@ jspm_packages
 *.lock
 
 .DS_Store
+dist-example/

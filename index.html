@@ -1,45 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="format-detection" content="telephone=no" />
-    <title>vue clipboard</title>
-    <style>
-        #app{
-            display: -webkit-flex;
-            display: flex;
-            width: 100%;
-            max-width: 450px;
-        }
-        #app input{
-            -webkit-flex: 1;
-            flex: 1;
-            padding: 7px 8px;
-            border: 1px solid #ccc;
-            background: #fff;
-            font-size: 13px;
-            line-height: 13px;
-            outline: 0;
-        }
-        #app button{
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-left: 0;
-            background-color: #eee;
-            background-image: linear-gradient(#fcfcfc, #eee);
-        }
-    </style>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <% if (htmlWebpackPlugin.options.description) { %>
+    <meta name="description" content="<%= htmlWebpackPlugin.options.description %>"/>
+    <% } %>
 </head>
 <body>
-    <div id="app">
-        <input type="text" v-model="value">
-        <button v-clipboard="value" @success="handleSuccess" @error="handleError">Copy</button>
-    </div>
-    <div id="logs"></div>
-
-    <script src="example/example.build.js"></script>
+    <div id="app"></div>
 </body>
 </html>

@@ -11,36 +11,42 @@ if (!Clipboard) {
 }
 
 export default function (Vue) {
-    let clipboards;
+    const clipboards = {};
+    const def = 'DEFAULT_KEY';
 
     Vue.directive('clipboard', {
-        bind (container, binding, vnode) {
-            const { value } = binding;
+        bind (container, { value }, vnode) {
             const option = {};
+            const key = vnode.key || def;
 
             if (value && typeof value === 'string') {
                 option.text = () => value;
             }
 
-            clipboards = new Clipboard(container, option);
+            clipboards[key] = new Clipboard(container, option);
 
             const { componentOptions, data } = vnode;
             const listeners = componentOptions ? componentOptions.listeners : null;
             const on = data ? data.on : null;
-            const events = listeners && listeners || on && on;
+            const events = (listeners && listeners) || (on && on);
 
             if (events && typeof events === 'object' && Object.keys(events).length) {
                 // fixed with Vue 2.2.x, event object `fn` rename to `fns`
-                Object.keys(events).map(cb => clipboards.on(cb, events[cb].fn || events[cb].fns));
+                Object.keys(events).map(
+                    cb => clipboards[key].on(cb, events[cb].fn || events[cb].fns)
+                );
             }
         },
-        unbind () {
-            if (clipboards && clipboards.destroy) {
-                clipboards.destroy();
+        unbind (vnode) {
+            const key = vnode.key || def;
+
+            if (clipboards[key] && clipboards[key].destroy) {
+                clipboards[key].destroy();
+                clipboards[key] = null;
             }
         },
         update (container, binding, vnode) {
-            binding.def.unbind();
+            binding.def.unbind(vnode);
             binding.def.bind(container, binding, vnode);
         }
     });

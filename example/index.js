@@ -7,7 +7,7 @@
 import Vue from 'vue';
 import 'sweetalert/dist/sweetalert.css';
 
-import App from './App';
+import App from './App.vue';
 import VueClipboards from '../src/vue-clipboards';
 
 Vue.use(VueClipboards);

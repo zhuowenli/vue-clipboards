@@ -19,16 +19,24 @@
     "build": "npm run build:cjs && npm run build:umd",
     "build:cjs": "vbuild -c vbuild.component.js --format cjs",
     "build:umd": "vbuild -c vbuild.component.js --format umd",
-    "example": "vbuild -c vbuild.example.js -d",
+    "dev": "vbuild -c vbuild.example.js -d",
     "deploy": "vbuild -c vbuild.example.js && gh-pages -d dist-example"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-config-vue": "^2.0.2",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-vue": "^2.0.1",
     "gh-pages": "^0.12.0",
+    "node-sass": "^4.5.2",
+    "sass-loader": "^6.0.5",
+    "sweetalert": "^1.1.3",
     "vbuild": "^6.0.0",
     "vbuild-karma": "^1.0.0"
   },
   "dependencies": {
-    "sweetalert": "^1.1.3",
     "clipboard": "^1.5.15"
   }
 }

@@ -64,7 +64,7 @@ new Vue({
 
 ## Development
 
-- `yarn example`: Run example in development mode
+- `yarn dev`: Run example in development mode
 - `yarn deploy`: Deploy example to gh-pages
 - `yarn build:cjs`: Build component in commonjs format
 - `yarn build:umd`: Build component in umd format

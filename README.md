@@ -17,7 +17,7 @@ $ npm install vue-clipboards
 ## Usage
 
 ```js
-const VueClipboards = require('vue-clipboards');
+import VueClipboards from 'vue-clipboards';
 
 Vue.use(VueClipboards);
 
@@ -41,7 +41,7 @@ new Vue({
 ```
 
 ```js
-const VueClipboards = require('vue-clipboards');
+import VueClipboards from 'vue-clipboards';
 
 Vue.use(VueClipboards);
 
@@ -61,6 +61,32 @@ new Vue({
     }
 });
 ```
+
+## Multiple
+
+You need to bind an `key`, when you use 'vue-clipboards' multiple times.
+
+
+```html
+<template v-for="(item, inx) in copyData">
+    <button v-clipboard="item" :key="inx">{{item}}</button>
+</template>
+```
+
+```js
+import VueClipboards from 'vue-clipboards';
+
+Vue.use(VueClipboards);
+
+new Vue({
+    data() {
+        return {
+            copyData: ['张三', '李四', '王五']
+        }
+    }
+});
+```
+
 
 ## Development
 

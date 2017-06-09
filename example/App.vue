@@ -19,7 +19,7 @@
             p You can get it on npm.
             pre.snippet
                 button.btn(v-clipboard="install" key="install" @success="handleSuccess")
-                code {{install}}
+                code.bash(v-highlight="") {{install}}
 
             h1#usage Usage
             h3 Copy text
@@ -32,21 +32,21 @@
                     button.input-group-button(v-clipboard="copyData" key="copyData")
             pre.snippet
                 button.btn(v-clipboard="usageHTML" key="usageHTML" @success="handleSuccess")
-                code {{usageHTML}}
+                code.html(v-highlight="") {{usageHTML}}
             pre.snippet
                 button.btn(v-clipboard="usageScript" key="usageScript" @success="handleSuccess")
-                code {{usageScript}}
+                code.js(v-highlight="") {{usageScript}}
 
             h1#event Event
             p There are cases where you'd like to show some user feedback or capture what has been selected after a copy operation.
             p That's why we fire custom events such as success and error for you to listen and implement your custom logic.
             pre.snippet
                 button.btn(v-clipboard="eventHTML" key="eventHTML" @success="handleSuccess")
-                code {{eventHTML}}
+                code.html(v-highlight="") {{eventHTML}}
             p script:
             pre.snippet
                 button.btn(v-clipboard="eventScript" key="eventScript" @success="handleSuccess")
-                code {{eventScript}}
+                code.js(v-highlight="") {{eventScript}}
 
             h3 Cut text
             p Additionally, you can define a
@@ -58,61 +58,71 @@
                     button.input-group-button(v-clipboard="cutData" key="cutData" @success="handleCutSuccess")
             pre.snippet
                 button.btn(v-clipboard="cutHTML" key="cutHTML" @success="handleSuccess")
-                code {{cutHTML}}
+                code.html(v-highlight="") {{cutHTML}}
             p script:
             pre.snippet
                 button.btn(v-clipboard="cutScript" key="cutScript" @success="handleSuccess")
-                code {{cutScript}}
+                code.js(v-highlight="") {{cutScript}}
 
             h1#multiple Multiple
-            p You need to bind an `key`, when you use 'vue-clipboards' multiple times.
+            p You need to bind an
+                code key
+                | , when you use
+                code vue-clipboards
+                | multiple times.
             pre.snippet
                 button.btn(v-clipboard="multipleHTML" key="multipleHTML" @success="handleSuccess")
-                code {{multipleHTML}}
+                code.html(v-highlight="") {{multipleHTML}}
             p script:
             pre.snippet
                 button.btn(v-clipboard="multipleScript" key="multipleScript" @success="handleSuccess")
-                code {{multipleScript}}
+                code.js(v-highlight="") {{multipleScript}}
 
 </template>
 
 <script>
-import swal from 'sweetalert';
-import { usageScript, usageHTML, eventHTML, eventScript, cutHTML, cutScript, multipleHTML, multipleScript } from './code';
+    import Hljs from 'highlightjs';
+    import swal from 'sweetalert';
+    import { usageScript, usageHTML, eventHTML, eventScript, cutHTML, cutScript, multipleHTML, multipleScript } from './code';
 
-export default {
-    name: 'App',
-    data () {
-        return {
-            install: 'npm install vue-clipboards --save',
-            usageScript,
-            usageHTML,
-            eventHTML,
-            eventScript,
-            cutHTML,
-            cutScript,
-            multipleHTML,
-            multipleScript,
-            cutData: 'hello world',
-            copyData: 'https://github.com/zhuowenli/vue-clipboards/'
-        };
-    },
-    methods: {
-        handleSuccess (e) {
-            swal('Success', '', 'success');
+    export default {
+        name: 'App',
+        data () {
+            return {
+                install: 'npm install vue-clipboards --save',
+                usageScript,
+                usageHTML,
+                eventHTML,
+                eventScript,
+                cutHTML,
+                cutScript,
+                multipleHTML,
+                multipleScript,
+                cutData: 'hello world',
+                copyData: 'https://github.com/zhuowenli/vue-clipboards/'
+            };
         },
-        handleCutSuccess (e) {
-            this.cutData = '';
+        directives: {
+            highlight: {
+                inserted (el) {
+                    Hljs.highlightBlock(el);
+                }
+            }
         },
-        handleError () {
-            swal('Oops...', 'Something went wrong!', 'error');
+        methods: {
+            handleSuccess (e) {
+                swal('Success', '', 'success');
+            },
+            handleCutSuccess (e) {
+                this.cutData = '';
+            },
+            handleError () {
+                swal('Oops...', 'Something went wrong!', 'error');
+            }
         }
-    }
-};
+    };
 </script>
 
 <style lang="sass">
-    @import "~primer-css/build/build.css"
-    @import "~sweetalert/dist/sweetalert.css"
     @import "./main.sass"
 </style>

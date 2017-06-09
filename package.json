@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "clipboard": "^1.5.15",
+    "highlightjs": "^9.10.0",
     "primer-css": "^6.0.0"
   }
 }

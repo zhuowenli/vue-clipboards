@@ -17,7 +17,7 @@ export default function (Vue) {
     Vue.directive('clipboard', {
         bind (container, { value }, vnode) {
             const option = {};
-            const key = vnode.key || def;
+            const key = (vnode.key || vnode.key === 0) ? vnode.key : def;
 
             if (value && typeof value === 'string') {
                 option.text = () => value;
@@ -38,7 +38,7 @@ export default function (Vue) {
             }
         },
         unbind (vnode) {
-            const key = vnode.key || def;
+            const key = (vnode.key || vnode.key === 0) ? vnode.key : def;
 
             if (clipboards[key] && clipboards[key].destroy) {
                 clipboards[key].destroy();

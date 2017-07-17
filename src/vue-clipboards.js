@@ -10,6 +10,12 @@ if (!Clipboard) {
     throw new Error('[vue-clipboards] cannot locate Clipboard.');
 }
 
+function isDom (obj) {
+    return typeof window.HTMLElement === 'object'
+        ? obj instanceof window.HTMLElement
+        : obj && typeof obj === 'object' && obj.nodeType === 1 && typeof obj.nodeName === 'string';
+}
+
 export default function (Vue) {
     const clipboards = {};
     const def = 'DEFAULT_KEY';
@@ -18,9 +24,25 @@ export default function (Vue) {
         bind (container, { value }, vnode) {
             const option = {};
             const key = (vnode.key || vnode.key === 0) ? vnode.key : def;
+            let $parent = null;
 
-            if (value && typeof value === 'string') {
+            if (value && /(string|number)/.test(typeof value)) {
                 option.text = () => value;
+            }
+
+            if (vnode.data.attrs && vnode.data.attrs.model) {
+                $parent = isDom(vnode.data.attrs.model)
+                        ? vnode.data.attrs.model
+                        : document.querySelector(vnode.data.attrs.model);
+            }
+
+            // 修复按钮脱离文档流时，clipboard监听失败问题
+            if (vnode.elm.offsetParent) {
+                option.container = vnode.elm.offsetParent;
+            } else if (isDom($parent)) {
+                option.container = $parent;
+            } else {
+                option.container = container.parentElement;
             }
 
             clipboards[key] = new Clipboard(container, option);

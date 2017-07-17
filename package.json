@@ -1,6 +1,6 @@
 {
   "name": "vue-clipboards",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Vue2.0 directive to copy or cut text to clipboard.",
   "main": "dist/vue-clipboards.js",
   "files": [
@@ -15,7 +15,6 @@
   "scripts": {
     "test": "echo lol",
     "test:unit": "vbuild -c vbuild.unit.js",
-    "lint": "vbuild -c vbuild.example.js --eslint",
     "build": "npm run build:cjs && npm run build:umd",
     "build:cjs": "vbuild -c vbuild.component.js --format cjs",
     "build:umd": "vbuild -c vbuild.component.js --format umd",
@@ -30,16 +29,16 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-vue": "^2.0.1",
     "gh-pages": "^0.12.0",
+    "highlightjs": "^9.10.0",
     "node-sass": "^4.5.2",
+    "primer-css": "^6.0.0",
     "pug": "^2.0.0-rc.2",
     "sass-loader": "^6.0.5",
     "sweetalert": "^1.1.3",
     "vbuild": "^6.0.0",
-    "vbuild-karma": "^1.0.0",
-    "highlightjs": "^9.10.0",
-    "primer-css": "^6.0.0"
+    "vbuild-karma": "^1.0.0"
   },
   "dependencies": {
-    "clipboard": "^1.5.15"
+    "clipboard": "^1.7.1"
   }
 }

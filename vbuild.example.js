@@ -10,6 +10,7 @@ module.exports = options => ({
     html: {
         title: 'vue-clipboards'
     },
+    port: 4444,
     copy: true,
     webpack (cfg) {
         if (!options.dev) {

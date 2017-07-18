@@ -42,7 +42,8 @@ export default function (Vue) {
             } else if (isDom($parent)) {
                 option.container = $parent;
             } else {
-                option.container = container.parentElement;
+                // if root element should use document.body
+                option.container = container.parentElement || document.body;
             }
 
             clipboards[key] = new Clipboard(container, option);

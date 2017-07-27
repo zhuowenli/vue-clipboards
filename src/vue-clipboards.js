@@ -21,13 +21,22 @@ export default function (Vue) {
     const def = 'DEFAULT_KEY';
 
     Vue.directive('clipboard', {
-        bind (container, { value }, vnode) {
+        async bind (container, { value }, vnode) {
             const option = {};
             const key = (vnode.key || vnode.key === 0) ? vnode.key : def;
             let $parent = null;
+            let text = value;
 
-            if (value && /(string|number)/.test(typeof value)) {
-                option.text = () => value;
+            if (text) {
+                if (typeof text === 'function') {
+                    text = await value();
+                }
+
+                if (/(string|number)/.test(typeof text)) {
+                    option.text = () => text;
+                } else {
+                    throw new Error('[vue-clipboards] Invalid value. Please use a valid value.');
+                }
             }
 
             if (vnode.data.attrs && vnode.data.attrs.model) {
@@ -59,6 +68,8 @@ export default function (Vue) {
                     cb => clipboards[key].on(cb, events[cb].fn || events[cb].fns)
                 );
             }
+
+            return clipboards[key];
         },
         unbind (vnode) {
             const key = (vnode.key || vnode.key === 0) ? vnode.key : def;

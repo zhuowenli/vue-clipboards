@@ -4,7 +4,7 @@
 
 📋 Vue2.0 directive to copy or cut text to clipboard.
 
-Vue wrapper for [clipboard](https://github.com/zenorocha/clipboard.js).
+Vue wrapper for [clipboard.js](https://github.com/zenorocha/clipboard.js).
 
 DEMO: [https://zhuowenli.github.io/vue-clipboards/](https://zhuowenli.github.io/vue-clipboards/)
 

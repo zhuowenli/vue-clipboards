@@ -78,12 +78,31 @@
                 button.btn(v-clipboard="multipleScript" key="multipleScript" @success="handleSuccess")
                 code.js(v-highlight="") {{multipleScript}}
 
+            h1#function Function
+            pre.snippet
+                button.btn(v-clipboard="functionHTML" key="functionHTML" @success="handleSuccess")
+                code.html(v-highlight="") {{functionHTML}}
+            p script:
+            pre.snippet
+                button.btn(v-clipboard="onCopyAction" key="functionScript" @success="handleSuccess")
+                code.js(v-highlight="") {{functionScript}}
 </template>
 
 <script>
     import Hljs from 'highlightjs';
     import swal from 'sweetalert';
-    import { usageScript, usageHTML, eventHTML, eventScript, cutHTML, cutScript, multipleHTML, multipleScript } from './code';
+    import {
+        usageScript,
+        usageHTML,
+        eventHTML,
+        eventScript,
+        cutHTML,
+        cutScript,
+        multipleHTML,
+        multipleScript,
+        functionHTML,
+        functionScript
+    } from './code';
 
     export default {
         name: 'App',
@@ -98,6 +117,8 @@
                 cutScript,
                 multipleHTML,
                 multipleScript,
+                functionHTML,
+                functionScript,
                 cutData: 'hello world',
                 copyData: 'https://github.com/zhuowenli/vue-clipboards/'
             };
@@ -110,6 +131,9 @@
             }
         },
         methods: {
+            onCopyAction () {
+                return this.functionScript;
+            },
             handleSuccess (e) {
                 swal('Success', '', 'success');
             },

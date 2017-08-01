@@ -78,3 +78,24 @@ new Vue({
     }
 });`;
 
+export const functionHTML = `<button
+    v-clipboard="onCopyAction"
+    @success="handleSuccess"
+>Copy</button>`;
+
+export const functionScript = `import VueClipboards from 'vue-clipboards';
+
+Vue.use(VueClipboards);
+
+new Vue({
+    data() {
+        return {
+            value: 1
+        }
+    },
+    methods: {
+        onCopyAction() {
+            return this.value + 1;
+        }
+    }
+});`;

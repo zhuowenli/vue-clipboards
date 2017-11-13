@@ -13,8 +13,6 @@
   "author": "卓文理 <531840344@qq.com>",
   "license": "MIT",
   "scripts": {
-    "test": "echo lol",
-    "test:unit": "vbuild -c vbuild.unit.js",
     "build": "npm run build:cjs && npm run build:umd",
     "build:cjs": "vbuild -c vbuild.component.js --format cjs",
     "build:umd": "vbuild -c vbuild.component.js --format umd",
@@ -22,7 +20,7 @@
     "deploy": "vbuild -c vbuild.example.js && gh-pages -d dist-example"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
+    "babel-eslint": "~8.0.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.1.3",
     "eslint-config-vue": "^2.0.2",

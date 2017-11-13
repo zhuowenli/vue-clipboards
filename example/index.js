@@ -6,7 +6,6 @@
 
 import 'highlightjs/highlight.pack.min';
 import Vue from 'vue';
-
 import App from './App.vue';
 import VueClipboards from '../src/vue-clipboards';
 

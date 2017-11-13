@@ -18,7 +18,7 @@
             h1#install Install
             p You can get it on npm.
             pre.snippet
-                button.btn(v-clipboard="install" key="install" @success="handleSuccess")
+                button.btn(v-clipboard="install" @success="handleSuccess")
                 code.bash(v-highlight="") {{install}}
 
             h1#usage Usage
@@ -29,23 +29,23 @@
             .example
                 .input-group
                     input(type="text" v-model="copyData")
-                    button.input-group-button(v-clipboard="copyData" key="copyData")
+                    button.input-group-button(v-clipboard="copyData")
             pre.snippet
-                button.btn(v-clipboard="usageHTML" key="usageHTML" @success="handleSuccess")
+                button.btn(v-clipboard="usageHTML" @success="handleSuccess")
                 code.html(v-highlight="") {{usageHTML}}
             pre.snippet
-                button.btn(v-clipboard="usageScript" key="usageScript" @success="handleSuccess")
+                button.btn(v-clipboard="usageScript" @success="handleSuccess")
                 code.js(v-highlight="") {{usageScript}}
 
             h1#event Event
             p There are cases where you'd like to show some user feedback or capture what has been selected after a copy operation.
             p That's why we fire custom events such as success and error for you to listen and implement your custom logic.
             pre.snippet
-                button.btn(v-clipboard="eventHTML" key="eventHTML" @success="handleSuccess")
+                button.btn(v-clipboard="eventHTML" @success="handleSuccess")
                 code.html(v-highlight="") {{eventHTML}}
             p script:
             pre.snippet
-                button.btn(v-clipboard="eventScript" key="eventScript" @success="handleSuccess")
+                button.btn(v-clipboard="eventScript" @success="handleSuccess")
                 code.js(v-highlight="") {{eventScript}}
 
             h3 Cut text
@@ -55,36 +55,22 @@
             .example
                 .input-group
                     input(type="text" v-model="cutData")
-                    button.input-group-button(v-clipboard="cutData" key="cutData" @success="handleCutSuccess")
+                    button.input-group-button(v-clipboard="cutData" @success="handleCutSuccess")
             pre.snippet
-                button.btn(v-clipboard="cutHTML" key="cutHTML" @success="handleSuccess")
+                button.btn(v-clipboard="cutHTML" @success="handleSuccess")
                 code.html(v-highlight="") {{cutHTML}}
             p script:
             pre.snippet
-                button.btn(v-clipboard="cutScript" key="cutScript" @success="handleSuccess")
+                button.btn(v-clipboard="cutScript" @success="handleSuccess")
                 code.js(v-highlight="") {{cutScript}}
-
-            h1#multiple Multiple
-            p You need to bind an
-                code key
-                | , when you use
-                code vue-clipboards
-                | multiple times.
-            pre.snippet
-                button.btn(v-clipboard="multipleHTML" key="multipleHTML" @success="handleSuccess")
-                code.html(v-highlight="") {{multipleHTML}}
-            p script:
-            pre.snippet
-                button.btn(v-clipboard="multipleScript" key="multipleScript" @success="handleSuccess")
-                code.js(v-highlight="") {{multipleScript}}
 
             h1#function Function
             pre.snippet
-                button.btn(v-clipboard="functionHTML" key="functionHTML" @success="handleSuccess")
+                button.btn(v-clipboard="functionHTML" @success="handleSuccess")
                 code.html(v-highlight="") {{functionHTML}}
             p script:
             pre.snippet
-                button.btn(v-clipboard="onCopyAction" key="functionScript" @success="handleSuccess")
+                button.btn(v-clipboard="onCopyAction" @success="handleSuccess")
                 code.js(v-highlight="") {{functionScript}}
 </template>
 
@@ -98,8 +84,6 @@
         eventScript,
         cutHTML,
         cutScript,
-        multipleHTML,
-        multipleScript,
         functionHTML,
         functionScript
     } from './code';
@@ -115,8 +99,6 @@
                 eventScript,
                 cutHTML,
                 cutScript,
-                multipleHTML,
-                multipleScript,
                 functionHTML,
                 functionScript,
                 cutData: 'hello world',

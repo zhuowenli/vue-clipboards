@@ -12,4 +12,5 @@ rules:
   linebreak-style: [2, "unix"]
   semi: [2, "always"]
   strict: ["error"]
+  no-param-reassign: [0, { "props": true, "ignorePropertyModificationsFor": ["bar"] }]
   import/no-extraneous-dependencies: 0

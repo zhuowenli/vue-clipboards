@@ -42,7 +42,8 @@ new Vue({
     }
 });`;
 
-export const cutHTML = `<button
+export const cutHTML = `<input type="text" v-model="cutData"/>
+<button
     v-clipboard="cutData"
     @success="handleSuccess"
 >Copy</button>`;
@@ -59,21 +60,6 @@ new Vue({
     methods: {
         handleSuccess(e) {
             this.cutData = '';
-        }
-    }
-});`;
-
-export const multipleHTML = `<template v-for="(item, inx) in copyData">
-    <button v-clipboard="item" :key="inx">{{item}}</button>
-</template>`;
-export const multipleScript = `import VueClipboards from 'vue-clipboards';
-
-Vue.use(VueClipboards);
-
-new Vue({
-    data() {
-        return {
-            copyData: ['张三', '李四', '王五']
         }
     }
 });`;

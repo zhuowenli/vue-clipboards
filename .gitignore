@@ -42,3 +42,4 @@ jspm_packages
 .npmrc
 .DS_Store
 dist-example/
+.vscode-upload.json

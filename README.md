@@ -62,10 +62,9 @@ new Vue({
 });
 ```
 
-## Multiple
+## Key
 
-You need to bind an `key`, when you use 'vue-clipboards' multiple times.
-
+`key` is unique key of clipboard list.
 
 ```html
 <template v-for="(item, inx) in copyData">

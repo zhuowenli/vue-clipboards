@@ -17,13 +17,9 @@ function isDom (obj) {
 }
 
 export default function (Vue) {
-    const clipboards = {};
-    const def = 'DEFAULT_KEY';
-
     Vue.directive('clipboard', {
-        async bind (container, { value }, vnode) {
+        async bind (el, { value }, vnode) {
             const option = {};
-            const key = (vnode.key || vnode.key === 0) ? vnode.key : def;
             let $parent = null;
             let text = value;
 
@@ -52,10 +48,10 @@ export default function (Vue) {
                 option.container = $parent;
             } else {
                 // if root element should use document.body
-                option.container = container.parentElement || document.body;
+                option.container = el.parentElement || document.body;
             }
 
-            clipboards[key] = new Clipboard(container, option);
+            vnode.elm.$clipboards = new Clipboard(el, option);
 
             const { componentOptions, data } = vnode;
             const listeners = componentOptions ? componentOptions.listeners : null;
@@ -65,23 +61,21 @@ export default function (Vue) {
             if (events && typeof events === 'object' && Object.keys(events).length) {
                 // fixed with Vue 2.2.x, event object `fn` rename to `fns`
                 Object.keys(events).map(
-                    cb => clipboards[key].on(cb, events[cb].fn || events[cb].fns)
+                    cb => vnode.elm.$clipboards.on(cb, events[cb].fn || events[cb].fns)
                 );
             }
 
-            return clipboards[key];
+            return vnode.elm.$clipboards;
         },
         unbind (vnode) {
-            const key = (vnode.key || vnode.key === 0) ? vnode.key : def;
-
-            if (clipboards[key] && clipboards[key].destroy) {
-                clipboards[key].destroy();
-                clipboards[key] = null;
+            if (vnode.elm && vnode.elm.$clipboards && vnode.elm.$clipboards.destroy) {
+                vnode.elm.$clipboards.destroy();
+                delete vnode.elm.$clipboards;
             }
         },
-        update (container, binding, vnode) {
+        update (el, binding, vnode) {
             binding.def.unbind(vnode);
-            binding.def.bind(container, binding, vnode);
+            binding.def.bind(el, binding, vnode);
         }
     });
 }

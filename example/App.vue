@@ -76,7 +76,7 @@
 
 <script>
     import Hljs from 'highlightjs';
-    import swal from 'sweetalert';
+    import swal from 'sweetalert2';
     import {
         usageScript,
         usageHTML,

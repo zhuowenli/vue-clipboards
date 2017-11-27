@@ -33,8 +33,7 @@
     "pug": "^2.0.0-rc.2",
     "sass-loader": "^6.0.5",
     "sweetalert2": "^7.0.5",
-    "vbuild": "^6.0.0",
-    "vbuild-karma": "^1.0.0"
+    "vbuild": "^6.0.0"
   },
   "dependencies": {
     "clipboard": "^1.7.1"

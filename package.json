@@ -14,7 +14,7 @@
   "author": "卓文理 <531840344@qq.com>",
   "license": "MIT",
   "scripts": {
-    "build": "bili --format umd,es src/vue-clipboards.js",
+    "build": "bili --inline --format umd,es src/vue-clipboards.js",
     "dev": "vbuild -c vbuild.example.js -d",
     "deploy": "vbuild -c vbuild.example.js && gh-pages -d dist-example"
   },

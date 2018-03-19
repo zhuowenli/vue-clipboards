@@ -458,17 +458,7 @@ function closest (element, selector) {
 
 var closest_1 = closest;
 
-/**
- * Delegates event to a selector.
- *
- * @param {Element} element
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @param {Boolean} useCapture
- * @return {Object}
- */
-function delegate(element, selector, type, callback, useCapture) {
+function _delegate(element, selector, type, callback, useCapture) {
     var listenerFn = listener.apply(this, arguments);
 
     element.addEventListener(type, listenerFn, useCapture);
@@ -478,6 +468,40 @@ function delegate(element, selector, type, callback, useCapture) {
             element.removeEventListener(type, listenerFn, useCapture);
         }
     }
+}
+
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element|String|Array} [elements]
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function delegate(elements, selector, type, callback, useCapture) {
+    // Handle the regular Element usage
+    if (typeof elements.addEventListener === 'function') {
+        return _delegate.apply(null, arguments);
+    }
+
+    // Handle Element-less usage, it defaults to global delegation
+    if (typeof type === 'function') {
+        // Use `document` as the first parameter, then apply arguments
+        // This is a short way to .unshift `arguments` without running into deoptimizations
+        return _delegate.bind(null, document).apply(null, arguments);
+    }
+
+    // Handle Selector-based usage
+    if (typeof elements === 'string') {
+        elements = document.querySelectorAll(elements);
+    }
+
+    // Handle Array-like based usage
+    return Array.prototype.map.call(elements, function (element) {
+        return _delegate(element, selector, type, callback, useCapture);
+    });
 }
 
 /**
@@ -501,15 +525,6 @@ function listener(element, selector, type, callback) {
 
 var delegate_1 = delegate;
 
-/**
- * Validates all params and calls the right
- * listener function based on its target type.
- *
- * @param {String|HTMLElement|HTMLCollection|NodeList} target
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
 function listen(target, type, callback) {
     if (!target && !type && !callback) {
         throw new Error('Missing required arguments');
@@ -815,40 +830,31 @@ function vueClipboards (Vue) {
   Vue.directive('clipboard', {
     bind: function bind(el, _ref, vnode) {
       return new Promise(function ($return, $error) {
-        var value, option, $parent, text, componentOptions, data, listeners, on, events;
-        value = _ref.value;
+        var text, option, $parent, componentOptions, data, listeners, on, events;
+        text = _ref.value;
         option = {};
         $parent = null;
-        text = value;
 
-        if (text) {
-          if (typeof text === 'function') {
-            return Promise.resolve(value()).then(function ($await_3) {
-              try {
-                text = $await_3;
-                return $If_2.call(this);
-              } catch ($boundEx) {
-                return $error($boundEx);
-              }
-            }.bind(this), $error);
-          }
-
-          function $If_2() {
-            if (/(string|number)/.test(_typeof(text))) {
-              option.text = function () {
-                return text;
-              };
-            } else {
-              return $error(new Error('[vue-clipboards] Invalid value. Please use a valid value.'));
+        if (text && typeof text === 'function') {
+          return Promise.resolve(text()).then(function ($await_2) {
+            try {
+              text = $await_2;
+              return $If_1.call(this);
+            } catch ($boundEx) {
+              return $error($boundEx);
             }
-
-            return $If_1.call(this);
-          }
-
-          return $If_2.call(this);
+          }.bind(this), $error);
         }
 
         function $If_1() {
+          if (text && /(string|number)/.test(_typeof(text))) {
+            option.text = function () {
+              return text;
+            };
+          } else {
+            return $error(new Error('[vue-clipboards] Invalid value. Please use a valid value.'));
+          }
+
           if (vnode.data.attrs && vnode.data.attrs.model) {
             $parent = isDom(vnode.data.attrs.model) ? vnode.data.attrs.model : document.querySelector(vnode.data.attrs.model);
           } // 修复按钮脱离文档流时，clipboard监听失败问题

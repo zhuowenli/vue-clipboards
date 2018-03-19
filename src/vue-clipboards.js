@@ -18,21 +18,18 @@ function isDom (obj) {
 
 export default function (Vue) {
     Vue.directive('clipboard', {
-        async bind (el, { value }, vnode) {
+        async bind (el, { value: text }, vnode) {
             const option = {};
             let $parent = null;
-            let text = value;
 
-            if (text) {
-                if (typeof text === 'function') {
-                    text = await value();
-                }
+            if (text && typeof text === 'function') {
+                text = await text();
+            }
 
-                if (/(string|number)/.test(typeof text)) {
-                    option.text = () => text;
-                } else {
-                    throw new Error('[vue-clipboards] Invalid value. Please use a valid value.');
-                }
+            if (text && /(string|number)/.test(typeof text)) {
+                option.text = () => text;
+            } else {
+                throw new Error('[vue-clipboards] Invalid value. Please use a valid value.');
             }
 
             if (vnode.data.attrs && vnode.data.attrs.model) {

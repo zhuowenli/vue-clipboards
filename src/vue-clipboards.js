@@ -26,8 +26,8 @@ export default function (Vue) {
                 text = await text();
             }
 
-            if (text && /(string|number)/.test(typeof text)) {
-                option.text = () => text;
+            if (/(string|number)/.test(typeof text)) {
+                option.text = () => `${text}`;
             } else {
                 throw new Error('[vue-clipboards] Invalid value. Please use a valid value.');
             }

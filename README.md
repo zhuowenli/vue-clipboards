@@ -64,9 +64,8 @@ new Vue({
 
 - `yarn dev`: Run example in development mode
 - `yarn deploy`: Deploy example to gh-pages
-- `yarn build:cjs`: Build component in commonjs format
-- `yarn build:umd`: Build component in umd format
-- `yarn build`: Build component in both format
+- `yarn build`: Build component in umd & es format
+- `yarn watch`: Build component in umd & es format with watch mode
 
 Check out your npm scripts, it's using [vbuild](https://github.com/egoist/vbuild) under the hood.
 

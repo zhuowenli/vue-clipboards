@@ -841,9 +841,9 @@ function vueClipboards (Vue) {
         }
 
         function $If_1() {
-          if (text && /(string|number)/.test(_typeof(text))) {
+          if (/(string|number)/.test(_typeof(text))) {
             option.text = function () {
-              return text;
+              return "".concat(text);
             };
           } else {
             return $error(new Error('[vue-clipboards] Invalid value. Please use a valid value.'));

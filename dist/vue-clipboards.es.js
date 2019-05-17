@@ -12,9 +12,7 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
@@ -70,12 +68,11 @@ var select_1 = select;
 
 var clipboardAction = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
-    if (typeof undefined === "function" && undefined.amd) {
-        undefined(['module', 'select'], factory);
-    } else {
+    {
         factory(module, select_1);
     }
 })(commonjsGlobal, function (module, _select) {
+
     var _select2 = _interopRequireDefault(_select);
 
     function _interopRequireDefault(obj) {
@@ -240,7 +237,7 @@ var clipboardAction = createCommonjsModule(function (module, exports) {
                     this.trigger.focus();
                 }
 
-                window.getSelection().removeAllRanges();
+                // window.getSelection().removeAllRanges();
             }
         }, {
             key: 'destroy',
@@ -317,7 +314,6 @@ E.prototype = {
       self.off(name, listener);
       callback.apply(ctx, arguments);
     }
-
     listener._ = callback;
     return this.on(name, listener, ctx);
   },
@@ -412,7 +408,6 @@ exports.fn = function(value) {
     return type === '[object Function]';
 };
 });
-
 var is_1 = is.node;
 var is_2 = is.nodeList;
 var is_3 = is.string;
@@ -452,7 +447,17 @@ function closest (element, selector) {
 
 var closest_1 = closest;
 
-function _delegate(element, selector, type, callback, useCapture) {
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function delegate(element, selector, type, callback, useCapture) {
     var listenerFn = listener.apply(this, arguments);
 
     element.addEventListener(type, listenerFn, useCapture);
@@ -462,40 +467,6 @@ function _delegate(element, selector, type, callback, useCapture) {
             element.removeEventListener(type, listenerFn, useCapture);
         }
     }
-}
-
-/**
- * Delegates event to a selector.
- *
- * @param {Element|String|Array} [elements]
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @param {Boolean} useCapture
- * @return {Object}
- */
-function delegate(elements, selector, type, callback, useCapture) {
-    // Handle the regular Element usage
-    if (typeof elements.addEventListener === 'function') {
-        return _delegate.apply(null, arguments);
-    }
-
-    // Handle Element-less usage, it defaults to global delegation
-    if (typeof type === 'function') {
-        // Use `document` as the first parameter, then apply arguments
-        // This is a short way to .unshift `arguments` without running into deoptimizations
-        return _delegate.bind(null, document).apply(null, arguments);
-    }
-
-    // Handle Selector-based usage
-    if (typeof elements === 'string') {
-        elements = document.querySelectorAll(elements);
-    }
-
-    // Handle Array-like based usage
-    return Array.prototype.map.call(elements, function (element) {
-        return _delegate(element, selector, type, callback, useCapture);
-    });
 }
 
 /**
@@ -519,6 +490,15 @@ function listener(element, selector, type, callback) {
 
 var delegate_1 = delegate;
 
+/**
+ * Validates all params and calls the right
+ * listener function based on its target type.
+ *
+ * @param {String|HTMLElement|HTMLCollection|NodeList} target
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
 function listen(target, type, callback) {
     if (!target && !type && !callback) {
         throw new Error('Missing required arguments');
@@ -605,12 +585,11 @@ var listen_1 = listen;
 
 var clipboard = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
-    if (typeof undefined === "function" && undefined.amd) {
-        undefined(['module', './clipboard-action', 'tiny-emitter', 'good-listener'], factory);
-    } else {
+    {
         factory(module, clipboardAction, tinyEmitter, listen_1);
     }
 })(commonjsGlobal, function (module, _clipboardAction, _tinyEmitter, _goodListener) {
+
     var _clipboardAction2 = _interopRequireDefault(_clipboardAction);
 
     var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
@@ -807,11 +786,6 @@ var clipboard = createCommonjsModule(function (module, exports) {
 
 var Clipboard = unwrapExports(clipboard);
 
-/**
- * @author: 卓文理
- * @email : 531840344@qq.com
- * @desc  : VueClipboard
- */
 if (!Clipboard) {
   throw new Error('[vue-clipboards] cannot locate Clipboard.');
 }
@@ -820,12 +794,29 @@ function isDom(obj) {
   return _typeof(window.HTMLElement) === 'object' ? obj instanceof window.HTMLElement : obj && _typeof(obj) === 'object' && obj.nodeType === 1 && typeof obj.nodeName === 'string';
 }
 
+function doubleClickHandler(e) {
+  var target = e.target;
+  var rng, sel;
+
+  if (document.createRange) {
+    rng = document.createRange();
+    rng.selectNode(target);
+    sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(rng);
+  } else {
+    rng = document.body.createTextRange();
+    rng.moveToElementText(target);
+    rng.select();
+  }
+}
+
 function vueClipboards (Vue) {
   Vue.directive('clipboard', {
-    bind: function bind(el, _ref, vnode) {
+    bind: function bind(el, _ref, vnode, oldvnode) {
       return new Promise(function ($return, $error) {
-        var text, option, $parent, componentOptions, data, listeners, on, events;
-        text = _ref.value;
+        var text, modifiers, option, $parent, componentOptions, data, listeners, on, events, withNativeSelection;
+        text = _ref.value, modifiers = _ref.modifiers;
         option = {};
         $parent = null;
 
@@ -874,22 +865,31 @@ function vueClipboards (Vue) {
             Object.keys(events).map(function (cb) {
               return vnode.elm.$clipboards.on(cb, events[cb].fn || events[cb].fns);
             });
+          } // add native user selection for dblclick
+
+
+          withNativeSelection = modifiers.nselect || false;
+
+          if (withNativeSelection) {
+            vnode.elm.addEventListener('dblclick', doubleClickHandler);
           }
 
           return $return(vnode.elm.$clipboards);
         }
 
         return $If_1.call(this);
-      }.bind(this));
+      });
     },
     unbind: function unbind(vnode) {
       if (vnode.elm && vnode.elm.$clipboards && vnode.elm.$clipboards.destroy) {
         vnode.elm.$clipboards.destroy();
+        vnode.elm.removeEventListener('dblclick', doubleClickHandler);
         delete vnode.elm.$clipboards;
       }
     },
     update: function update(el, binding, vnode) {
       binding.def.unbind(vnode);
+      vnode.elm.removeEventListener('dblclick', doubleClickHandler);
       binding.def.bind(el, binding, vnode);
     }
   });

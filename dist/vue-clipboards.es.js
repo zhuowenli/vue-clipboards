@@ -850,88 +850,90 @@ function doubleClickHandler(e) {
   }
 }
 
-function vueClipboards (Vue) {
-  Vue.directive('clipboard', {
-    bind: function bind(el, _ref, vnode) {
-      return new Promise(function ($return, $error) {
-        var text, modifiers, option, $parent, componentOptions, data, listeners, on, events, withNativeSelection;
-        text = _ref.value, modifiers = _ref.modifiers;
-        option = {};
-        $parent = null;
+var clipboard$1 = {
+  bind: function bind(el, _ref, vnode) {
+    return new Promise(function ($return, $error) {
+      var text, modifiers, option, $parent, componentOptions, data, listeners, on, events, withNativeSelection;
+      text = _ref.value, modifiers = _ref.modifiers;
+      option = {};
+      $parent = null;
 
-        if (text && typeof text === 'function') {
-          return Promise.resolve(text()).then(function ($await_2) {
-            try {
-              text = $await_2;
-              return $If_1.call(this);
-            } catch ($boundEx) {
-              return $error($boundEx);
-            }
-          }.bind(this), $error);
-        }
-
-        function $If_1() {
-          if (/(string|number)/.test(_typeof(text))) {
-            option.text = function () {
-              return "".concat(text);
-            };
-          } else {
-            return $error(new Error('[vue-clipboards] Invalid value. Please use a valid value.'));
+      if (text && typeof text === 'function') {
+        return Promise.resolve(text()).then(function ($await_2) {
+          try {
+            text = $await_2;
+            return $If_1.call(this);
+          } catch ($boundEx) {
+            return $error($boundEx);
           }
-
-          if (vnode.data.attrs && vnode.data.attrs.model) {
-            $parent = isDom(vnode.data.attrs.model) ? vnode.data.attrs.model : document.querySelector(vnode.data.attrs.model);
-          } // 修复按钮脱离文档流时，clipboard监听失败问题
-
-
-          if (vnode.elm.offsetParent) {
-            option.container = vnode.elm.offsetParent;
-          } else if (isDom($parent)) {
-            option.container = $parent;
-          } else {
-            // if root element should use document.body
-            option.container = el.parentElement || document.body;
-          }
-
-          vnode.elm.$clipboards = new Clipboard(el, option);
-          componentOptions = vnode.componentOptions, data = vnode.data;
-          listeners = componentOptions ? componentOptions.listeners : null;
-          on = data ? data.on : null;
-          events = listeners && listeners || on && on;
-
-          if (events && _typeof(events) === 'object' && Object.keys(events).length) {
-            // fixed with Vue 2.2.x, event object `fn` rename to `fns`
-            Object.keys(events).map(function (cb) {
-              return vnode.elm.$clipboards.on(cb, events[cb].fn || events[cb].fns);
-            });
-          } // add native user selection for dblclick
-
-
-          withNativeSelection = modifiers.nselect || false;
-
-          if (withNativeSelection) {
-            vnode.elm.addEventListener('dblclick', doubleClickHandler);
-          }
-
-          return $return(vnode.elm.$clipboards);
-        }
-
-        return $If_1.call(this);
-      });
-    },
-    unbind: function unbind(vnode) {
-      if (vnode.elm && vnode.elm.$clipboards && vnode.elm.$clipboards.destroy) {
-        vnode.elm.$clipboards.destroy();
-        vnode.elm.removeEventListener('dblclick', doubleClickHandler);
-        delete vnode.elm.$clipboards;
+        }.bind(this), $error);
       }
-    },
-    update: function update(el, binding, vnode) {
-      binding.def.unbind(vnode);
+
+      function $If_1() {
+        if (/(string|number)/.test(_typeof(text))) {
+          option.text = function () {
+            return "".concat(text);
+          };
+        } else {
+          return $error(new Error('[vue-clipboards] Invalid value. Please use a valid value.'));
+        }
+
+        if (vnode.data.attrs && vnode.data.attrs.model) {
+          $parent = isDom(vnode.data.attrs.model) ? vnode.data.attrs.model : document.querySelector(vnode.data.attrs.model);
+        } // 修复按钮脱离文档流时，clipboard监听失败问题
+
+
+        if (vnode.elm.offsetParent) {
+          option.container = vnode.elm.offsetParent;
+        } else if (isDom($parent)) {
+          option.container = $parent;
+        } else {
+          // if root element should use document.body
+          option.container = el.parentElement || document.body;
+        }
+
+        vnode.elm.$clipboards = new Clipboard(el, option);
+        componentOptions = vnode.componentOptions, data = vnode.data;
+        listeners = componentOptions ? componentOptions.listeners : null;
+        on = data ? data.on : null;
+        events = listeners && listeners || on && on;
+
+        if (events && _typeof(events) === 'object' && Object.keys(events).length) {
+          // fixed with Vue 2.2.x, event object `fn` rename to `fns`
+          Object.keys(events).map(function (cb) {
+            return vnode.elm.$clipboards.on(cb, events[cb].fn || events[cb].fns);
+          });
+        } // add native user selection for dblclick
+
+
+        withNativeSelection = modifiers.nselect || false;
+
+        if (withNativeSelection) {
+          vnode.elm.addEventListener('dblclick', doubleClickHandler);
+        }
+
+        return $return(vnode.elm.$clipboards);
+      }
+
+      return $If_1.call(this);
+    });
+  },
+  unbind: function unbind(vnode) {
+    if (vnode.elm && vnode.elm.$clipboards && vnode.elm.$clipboards.destroy) {
+      vnode.elm.$clipboards.destroy();
       vnode.elm.removeEventListener('dblclick', doubleClickHandler);
-      binding.def.bind(el, binding, vnode);
+      delete vnode.elm.$clipboards;
     }
-  });
+  },
+  update: function update(el, binding, vnode) {
+    binding.def.unbind(vnode);
+    vnode.elm.removeEventListener('dblclick', doubleClickHandler);
+    binding.def.bind(el, binding, vnode);
+  }
+};
+function vueClipboards (Vue) {
+  Vue.directive('clipboard', clipboard$1);
 }
 
 export default vueClipboards;
+export { clipboard$1 as clipboard };

@@ -16,28 +16,27 @@ function isDom (obj) {
         : obj && typeof obj === 'object' && obj.nodeType === 1 && typeof obj.nodeName === 'string';
 }
 
-function doubleClickHandler(e){
-  const target = e.target
-  let rng, sel
-  if (document.createRange) {
-    rng = document.createRange();
-    rng.selectNode(target)
-    sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(rng);
-  } else {
-    rng = document.body.createTextRange();
-    rng.moveToElementText(target);
-    rng.select();
-  }
+function doubleClickHandler (e) {
+    const target = e.target;
+
+    if (document.createRange) {
+        const rng = document.createRange();
+        const sel = window.getSelection();
+
+        rng.selectNode(target);
+        sel.removeAllRanges();
+        sel.addRange(rng);
+    } else {
+        const rng = document.body.createTextRange();
+
+        rng.moveToElementText(target);
+        rng.select();
+    }
 }
 
 export default function (Vue) {
-    Vue.directive(
-      'clipboard',
-      {
+    Vue.directive('clipboard', {
         async bind (el, { value: text, modifiers }, vnode, oldvnode) {
-
             const option = {};
             let $parent = null;
 
@@ -82,10 +81,10 @@ export default function (Vue) {
             }
 
             // add native user selection for dblclick
-            const withNativeSelection = modifiers.nselect || false
+            const withNativeSelection = modifiers.nselect || false;
 
-            if( withNativeSelection ){
-              vnode.elm.addEventListener('dblclick', doubleClickHandler)
+            if (withNativeSelection) {
+                vnode.elm.addEventListener('dblclick', doubleClickHandler);
             }
 
             return vnode.elm.$clipboards;
@@ -93,15 +92,15 @@ export default function (Vue) {
         unbind (vnode) {
             if (vnode.elm && vnode.elm.$clipboards && vnode.elm.$clipboards.destroy) {
                 vnode.elm.$clipboards.destroy();
-                vnode.elm.removeEventListener('dblclick', doubleClickHandler)
+                vnode.elm.removeEventListener('dblclick', doubleClickHandler);
                 delete vnode.elm.$clipboards;
             }
         },
         update (el, binding, vnode) {
             binding.def.unbind(vnode);
-            vnode.elm.removeEventListener('dblclick', doubleClickHandler)
+            vnode.elm.removeEventListener('dblclick', doubleClickHandler);
             binding.def.bind(el, binding, vnode);
         }
-      }
+    }
    );
 }

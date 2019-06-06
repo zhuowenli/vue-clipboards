@@ -78,10 +78,10 @@
             .example
                 .input-group(style="flex-direction: column")
                     span(style="color:#999; font-size: 12px; display: inline-block; width: 100%") Double click
-                    strong(v-clipboard="copyData", style="font-size: 18px") j3n2j3JKND3u203nflDNqw24RNwqR
+                    strong(v-clipboard="'j3n2j3JKND3u203nflDNqw24RNwqR'", style="font-size: 18px") j3n2j3JKND3u203nflDNqw24RNwqR
                     .splitter(style="width: 100%; height: 1px; background: #eee; margin: 10px 0")
                     span(style="color:#999; font-size: 12px; display: inline-block; width: 100%") Double click (with .nselect)
-                    strong(v-clipboard.nselect="copyData", style="font-size: 18px") j3n2j3JKND3u203nflDNqw24RNwqR
+                    strong(v-clipboard.nselect="'OBOE5CQMj4KqLAqyMHj0Vq3ZqEAvCgK8'", style="font-size: 18px") OBOE5CQMj4KqLAqyMHj0Vq3ZqEAvCgK8
 
 </template>
 

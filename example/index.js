@@ -9,7 +9,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import VueClipboards from '../src/vue-clipboards';
 
-Vue.use(VueClipboards);
+// Vue.use(VueClipboards);
 
 export default new Vue({
     el: '#app',

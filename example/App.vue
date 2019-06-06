@@ -75,19 +75,19 @@
 
             h1#modifiers Modifiers
             p For allow native user text selection by double click you can set <code>.nselect</code> modifier
-            .example
-                .input-group(style="flex-direction: column")
-                    span(style="color:#999; font-size: 12px; display: inline-block; width: 100%") Double click
-                    strong(v-clipboard="'j3n2j3JKND3u203nflDNqw24RNwqR'", style="font-size: 18px") j3n2j3JKND3u203nflDNqw24RNwqR
-                    .splitter(style="width: 100%; height: 1px; background: #eee; margin: 10px 0")
-                    span(style="color:#999; font-size: 12px; display: inline-block; width: 100%") Double click (with .nselect)
-                    strong(v-clipboard.nselect="'OBOE5CQMj4KqLAqyMHj0Vq3ZqEAvCgK8'", style="font-size: 18px") OBOE5CQMj4KqLAqyMHj0Vq3ZqEAvCgK8
-
+            .example.nselect
+                .input-group
+                    span Double click
+                    strong(v-clipboard="'j3n2j3JKND3u203nflDNqw24RNwqR'") j3n2j3JKND3u203nflDNqw24RNwqR
+                    .splitter
+                    span Double click (with .nselect)
+                    strong(v-clipboard.nselect="'OBOE5CQMj4KqLAqyMHj0Vq3ZqEAvCgK8'") OBOE5CQMj4KqLAqyMHj0Vq3ZqEAvCgK8
 </template>
 
 <script>
     import Hljs from 'highlightjs';
     import swal from 'sweetalert2';
+    import { clipboard } from '../src/vue-clipboards';
     import {
         usageScript,
         usageHTML,
@@ -121,7 +121,8 @@
                 inserted (el) {
                     Hljs.highlightBlock(el);
                 }
-            }
+            },
+            clipboard
         },
         methods: {
             onCopyAction () {

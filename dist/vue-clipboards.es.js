@@ -12,7 +12,7 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
@@ -68,7 +68,9 @@ var select_1 = select;
 
 var clipboardAction = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
-    {
+    if (typeof undefined === "function" && undefined.amd) {
+        undefined(['module', 'select'], factory);
+    } else {
         factory(module, select_1);
     }
 })(commonjsGlobal, function (module, _select) {
@@ -237,7 +239,7 @@ var clipboardAction = createCommonjsModule(function (module, exports) {
                     this.trigger.focus();
                 }
 
-                // window.getSelection().removeAllRanges();
+                window.getSelection().removeAllRanges();
             }
         }, {
             key: 'destroy',
@@ -457,7 +459,7 @@ var closest_1 = closest;
  * @param {Boolean} useCapture
  * @return {Object}
  */
-function delegate(element, selector, type, callback, useCapture) {
+function _delegate(element, selector, type, callback, useCapture) {
     var listenerFn = listener.apply(this, arguments);
 
     element.addEventListener(type, listenerFn, useCapture);
@@ -467,6 +469,40 @@ function delegate(element, selector, type, callback, useCapture) {
             element.removeEventListener(type, listenerFn, useCapture);
         }
     }
+}
+
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element|String|Array} [elements]
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function delegate(elements, selector, type, callback, useCapture) {
+    // Handle the regular Element usage
+    if (typeof elements.addEventListener === 'function') {
+        return _delegate.apply(null, arguments);
+    }
+
+    // Handle Element-less usage, it defaults to global delegation
+    if (typeof type === 'function') {
+        // Use `document` as the first parameter, then apply arguments
+        // This is a short way to .unshift `arguments` without running into deoptimizations
+        return _delegate.bind(null, document).apply(null, arguments);
+    }
+
+    // Handle Selector-based usage
+    if (typeof elements === 'string') {
+        elements = document.querySelectorAll(elements);
+    }
+
+    // Handle Array-like based usage
+    return Array.prototype.map.call(elements, function (element) {
+        return _delegate(element, selector, type, callback, useCapture);
+    });
 }
 
 /**
@@ -585,7 +621,9 @@ var listen_1 = listen;
 
 var clipboard = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
-    {
+    if (typeof undefined === "function" && undefined.amd) {
+        undefined(['module', './clipboard-action', 'tiny-emitter', 'good-listener'], factory);
+    } else {
         factory(module, clipboardAction, tinyEmitter, listen_1);
     }
 })(commonjsGlobal, function (module, _clipboardAction, _tinyEmitter, _goodListener) {
@@ -796,24 +834,25 @@ function isDom(obj) {
 
 function doubleClickHandler(e) {
   var target = e.target;
-  var rng, sel;
 
   if (document.createRange) {
-    rng = document.createRange();
+    var rng = document.createRange();
+    var sel = window.getSelection();
     rng.selectNode(target);
-    sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(rng);
   } else {
-    rng = document.body.createTextRange();
-    rng.moveToElementText(target);
-    rng.select();
+    var _rng = document.body.createTextRange();
+
+    _rng.moveToElementText(target);
+
+    _rng.select();
   }
 }
 
 function vueClipboards (Vue) {
   Vue.directive('clipboard', {
-    bind: function bind(el, _ref, vnode, oldvnode) {
+    bind: function bind(el, _ref, vnode) {
       return new Promise(function ($return, $error) {
         var text, modifiers, option, $parent, componentOptions, data, listeners, on, events, withNativeSelection;
         text = _ref.value, modifiers = _ref.modifiers;

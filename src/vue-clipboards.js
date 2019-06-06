@@ -36,7 +36,7 @@ function doubleClickHandler (e) {
 
 export default function (Vue) {
     Vue.directive('clipboard', {
-        async bind (el, { value: text, modifiers }, vnode, oldvnode) {
+        async bind (el, { value: text, modifiers }, vnode) {
             const option = {};
             let $parent = null;
 

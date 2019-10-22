@@ -22,7 +22,7 @@
   "devDependencies": {
     "babel-eslint": "~8.0.2",
     "bili": "^3.0.7",
-    "eslint": "^3.19.0",
+    "eslint": "^4.18.2",
     "eslint-config-airbnb-base": "^11.1.3",
     "eslint-config-vue": "^2.0.2",
     "eslint-plugin-import": "^2.2.0",

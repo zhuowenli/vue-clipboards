@@ -43,3 +43,5 @@ jspm_packages
 .DS_Store
 dist-example/
 .vscode-upload.json
+package-lock.json
+
